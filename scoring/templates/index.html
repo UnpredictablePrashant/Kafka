@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Score</title>
+</head>
+<body>
+    <h1>Live Score</h1>
+    <div id="scores">
+        <p>India: <span id="team_a"></span></p>
+        <p>Pakistan: <span id="team_b"></span></p>
+    </div>
+    <script>
+        const eventSource = new EventSource('/score_stream');
+        eventSource.onmessage = function(event) {
+            const scores = JSON.parse(event.data);
+            console.log('Scores: ', scores.India)
+            document.getElementById('team_a').innerHTML = scores.India;
+            document.getElementById('team_b').innerHTML = scores.Pakistan;
+        };
+    </script>
+</body>
+</html>
